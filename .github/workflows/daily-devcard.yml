@@ -1,0 +1,32 @@
+name: daily-devcard
+
+on:
+  workflow_dispatch:  # Allows for manual trigger from Actions tab
+  push:
+    branches:
+      - main  # Runs when changes are pushed to the main branch
+  schedule:
+    - cron: "0 0 * * *"  # Runs every day at midnight
+
+jobs:
+  devcard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Grants permission to update files in the repository
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checks out the repository code
+
+      - name: Run DevCard action
+        uses: dailydotdev/action-devcard@3.0.0  # Uses the DevCard action
+        with:
+          user_id: ${{ secrets.USER_ID }}  # Uses the secret for your user ID
+          commit_message: "chore: update devcard"  # Custom commit message
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "Your Name"
+          git config --global user.email "youremail@example.com"
+          git add devcard.png  # Adds the DevCard image file to commit
+          git commit -m "chore: update devcard"
+          git push
