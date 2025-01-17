@@ -15,7 +15,7 @@ jobs:
       contents: write  # Grants permission to update files in the repository
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Checks out the repository code
+        uses: actions/checkout@v4  # Checks out the repository code
 
       - name: Run DevCard action
         uses: dailydotdev/action-devcard@3.0.0  # Uses the DevCard action
